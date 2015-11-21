@@ -1,0 +1,43 @@
+ext {
+  springVersion = "4.2.0.RELEASE"
+  springSecurityVersion = "4.0.1.RELEASE"
+  jacksonVersion = '2.5.2'
+  log4j2Version = '2.0.2'
+
+  libs = [
+
+          spring            : [
+                  "org.springframework:spring-core:$springVersion",
+                  "org.springframework:spring-web:$springVersion",
+                  "org.springframework:spring-jdbc:$springVersion",
+                  "org.springframework:spring-tx:$springVersion",
+                  "org.springframework:spring-webmvc:$springVersion",
+                  "org.springframework:spring-oxm:$springVersion",
+                  "org.springframework:spring-context:$springVersion",
+                  "org.springframework:spring-context-support:$springVersion",
+                  "org.springframework:spring-aop:$springVersion"
+          ],
+
+          security          : [
+                  "org.springframework.security:spring-security-core:$springSecurityVersion",
+                  "org.springframework.security:spring-security-config:$springSecurityVersion",
+                  "org.springframework.security:spring-security-web:$springSecurityVersion",
+                  "org.springframework.security:spring-security-taglibs:$springSecurityVersion"
+          ],
+
+          logging           : [
+                  "org.apache.logging.log4j:log4j-api:${log4j2Version}",
+                  "org.apache.logging.log4j:log4j-core:${log4j2Version}",
+                  "org.apache.logging.log4j:log4j-jcl:${log4j2Version}",
+                  "org.apache.logging.log4j:log4j-slf4j-impl:${log4j2Version}",
+                  "org.apache.logging.log4j:log4j-taglib:${log4j2Version}"
+          ],
+
+          jackson           : [
+                  "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
+                  "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+                  "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+
+          ]
+  ]
+}

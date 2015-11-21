@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </appenders>
+    <loggers>
+        <root level="DEBUG">
+            <appender-ref ref="Console"/>
+        </root>
+        <logger name="net.sf.ehcache" level="DEBUG"/>
+        <logger name="org.springframework.security.web" level="WARN"/>
+        <logger name="org.springframework.beans" level="WARN"/>
+        <logger name="com.mangofactory.swagger" level="WARN" />
+        <logger name="org.springframework.web" level="DEBUG" />
+        <logger name="org.springframework.web.context" level="WARN" />
+        <logger name="org.springframework.web.servlet.handler" level="WARN" />
+        <logger name="org.springframework.core" level="WARN" />
+        <logger name="org.springframework.context" level="WARN" />
+    </loggers>
+</configuration>
+

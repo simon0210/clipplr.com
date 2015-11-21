@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clipplr.platform.persistence.mybatis.mapper.user.PlatformUserMapper">
+    <resultMap id="PlatformUserResultMap" type="com.clipplr.platform.persistence.mybatis.domain.user.PlatformUser">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="label_id" jdbcType="INTEGER" property="labelId" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="screen_name" jdbcType="VARCHAR" property="screenName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="financial_account_id" jdbcType="BIGINT" property="financialAccountId" />
+        <result column="hierarchy_id" jdbcType="INTEGER" property="hierarchyId" />
+        <result column="locale" jdbcType="VARCHAR" property="locale" />
+        <result column="time_zone" jdbcType="VARCHAR" property="timeZone" />
+        <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+        <result column="email_address" jdbcType="VARCHAR" property="emailAddress" />
+        <result column="is_enabled" jdbcType="BIT" property="isEnabled" />
+        <result column="is_account_non_expired" jdbcType="BIT" property="isAccountNonExpired" />
+        <result column="is_account_non_locked" jdbcType="BIT" property="isAccountNonLocked" />
+        <result column="is_credentials_non_expired" jdbcType="BIT" property="isCredentialsNonExpired" />
+        <result column="is_never_deposited" jdbcType="BIT" property="isNeverDeposited" />
+        <result column="is_tutorial" jdbcType="BIT" property="isTutorial" />
+        <result column="login_attempts" jdbcType="SMALLINT" property="loginAttempts" />
+        <result column="security_answer_attempts" jdbcType="SMALLINT" property="securityAnswerAttempts" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="sign_up_ip" jdbcType="VARCHAR" property="signUpIp" />
+        <result column="session_time_out" jdbcType="INTEGER" property="sessionTimeOut" />
+        <result column="locked_begins" jdbcType="TIMESTAMP" property="lockedBegins" />
+        <result column="locked_ends" jdbcType="TIMESTAMP" property="lockedEnds" />
+        <result column="rakeback_ratio" jdbcType="DECIMAL" property="rakebackRatio" />
+        <result column="bonus_code_id" jdbcType="BIGINT" property="bonusCodeId" />
+        <result column="gp_id" jdbcType="VARCHAR" property="gpID" />
+    </resultMap>
+
+    <select id="selectUser" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          users.*, uan.gp_id
+        FROM users
+        INNER JOIN user_alt_names AS uan ON users.id = uan.user_id
+        INNER JOIN business_hierarchy AS h ON h.id = users.hierarchy_id
+        INNER JOIN business_hierarchy AS base_h ON base_h.id = #{accessPass.hierarchyId, jdbcType=INTEGER}
+          AND h.lft &gt;= base_h.lft AND h.rgt &lt;= base_h.rgt
+        WHERE username = #{name, jdbcType=VARCHAR}
+    </select>
+
+     <select id="selectUserByEmail" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          users.*, uan.gp_id
+        FROM users
+        INNER JOIN user_alt_names AS uan ON users.id = uan.user_id
+        INNER JOIN business_hierarchy AS h ON h.id = users.hierarchy_id
+        INNER JOIN business_hierarchy AS base_h ON base_h.id = #{accessPass.hierarchyId, jdbcType=INTEGER}
+          AND h.lft &gt;= base_h.lft AND h.rgt &lt;= base_h.rgt
+        WHERE  email_address = #{email, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserDetail"  parameterType="map" resultType="java.util.HashMap">
+       SELECT
+            users.username as username, users.screen_name as nickname, uan.gp_id as gpId,
+            fa.balance as chip, fa.ruby as ruby, fa.bean as bean, ur.membership_level as member_level, ur.rank as vip_level
+        FROM users
+        INNER JOIN user_alt_names AS uan ON users.id = uan.user_id
+        INNER JOIN user_ranks as ur ON users.id = ur.user_id
+        INNER JOIN financial_accounts as fa on users.financial_account_id = fa.id
+        INNER JOIN business_hierarchy AS h ON h.id = users.hierarchy_id
+        INNER JOIN business_hierarchy AS base_h ON base_h.id = #{accessPass.hierarchyId, jdbcType=INTEGER}
+            AND h.lft &gt;= base_h.lft AND h.rgt &lt;= base_h.rgt
+        WHERE username = #{name, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectPlatformUsers" parameterType="hashmap" resultType="java.util.HashMap">
+        SELECT
+            u.id as user_id,
+            u.screen_name AS screen_name,
+            u.username AS username,
+            p.code as sp_name,
+            a.agent_name AS agent_name,
+            fa.balance AS balance,
+            u.created_at AS sign_up_date,
+            u.sign_up_ip,
+            '' as last_login,
+            '' as last_login_ip
+         FROM
+          users u
+        INNER JOIN
+          agents a ON u.hierarchy_id = a.hierarchy_id
+        INNER JOIN
+          partners p on a.label_id = p.hierarchy_id
+        INNER JOIN
+          financial_accounts fa ON u.financial_account_id = fa.id
+        <if test="params.partner != null">
+            INNER JOIN
+            business_hierarchy AS h ON u.hierarchy_id = h.id
+              INNER JOIN
+            business_hierarchy AS base_h ON base_h.id = #{params.partner.hierarchyId, jdbcType=INTEGER} AND h.lft &gt;= base_h.lft
+            AND h.rgt &lt;= base_h.rgt
+        </if>
+        where 1 = 1
+        <if test="params.userNameOrScreenName != null">
+            and u.screen_name like  #{params.userNameOrScreenName, jdbcType=VARCHAR} or username like  #{params.userNameOrScreenName, jdbcType=VARCHAR}
+        </if>
+        <if test="params.emailAddress != null">
+            and u.email_address like #{params.emailAddress, jdbcType=VARCHAR}
+        </if>
+        <if test="params.ipAddress != null">
+            and u.sign_up_ip like #{params.ipAddress, jdbcType=VARCHAR}
+        </if>
+        <if test="params.startDate != null">
+            and u.created_at &gt;=  #{params.startDate, jdbcType=VARCHAR}
+        </if>
+        <if test="params.endDate != null">
+            and u.created_at &lt;=  #{params.endDate, jdbcType=VARCHAR}
+        </if>
+        <if test="params.bounds != null">
+            LIMIT #{params.bounds.offset, jdbcType=INTEGER} , #{params.bounds.limit, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectPlatformUsersByID" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          u.*
+        FROM
+          users u
+            INNER JOIN
+          financial_accounts fa ON u.financial_account_id = fa.id and u.id = #{userID, jdbcType=BIGINT}
+            INNER JOIN
+          business_hierarchy AS h ON h.id = u.hierarchy_id
+            INNER JOIN
+          business_hierarchy AS base_h ON base_h.id = #{accessPass.permittedRootId, jdbcType=INTEGER} AND h.lft &gt;= base_h.lft
+    </select>
+
+    <select id="selectPlatformUserByEmailAddress" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          *
+        FROM
+          users
+        WHERE email_address = #{email, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectPlatformUserByScreenName" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          *
+        FROM
+          users
+        WHERE screen_name = #{nickname, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectPlatformUserByUserID" parameterType="map" resultMap="PlatformUserResultMap">
+        SELECT
+          *
+        FROM
+          users
+        WHERE id = #{userID, jdbcType=BIGINT}
+    </select>
+
+</mapper>

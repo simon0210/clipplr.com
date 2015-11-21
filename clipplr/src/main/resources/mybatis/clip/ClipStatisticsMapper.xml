@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clipplr.platform.persistence.mybatis.mapper.clip.ClipStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="clip_id" property="clipId" jdbcType="BIGINT" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="clip_count" property="clipCount" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, clip_id, view_count, clip_count
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from clip_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from clip_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from clip_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatisticsExample" >
+    delete from clip_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into clip_statistics (clip_id, view_count, clip_count
+      )
+    values (#{clipId,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, #{clipCount,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into clip_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clipId != null" >
+        clip_id,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="clipCount != null" >
+        clip_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clipId != null" >
+        #{clipId,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="clipCount != null" >
+        #{clipCount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from clip_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update clip_statistics
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.clipId != null" >
+        clip_id = #{record.clipId,jdbcType=BIGINT},
+      </if>
+      <if test="record.viewCount != null" >
+        view_count = #{record.viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.clipCount != null" >
+        clip_count = #{record.clipCount,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update clip_statistics
+    set id = #{record.id,jdbcType=BIGINT},
+      clip_id = #{record.clipId,jdbcType=BIGINT},
+      view_count = #{record.viewCount,jdbcType=BIGINT},
+      clip_count = #{record.clipCount,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics" >
+    update clip_statistics
+    <set >
+      <if test="clipId != null" >
+        clip_id = #{clipId,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="clipCount != null" >
+        clip_count = #{clipCount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics" >
+    update clip_statistics
+    set clip_id = #{clipId,jdbcType=BIGINT},
+      view_count = #{viewCount,jdbcType=BIGINT},
+      clip_count = #{clipCount,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatisticsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from clip_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,100 @@
+plugins {
+    id "org.akhikhl.gretty" version "1.2.0"
+    id "org.flywaydb.flyway" version "3.2"
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'org.akhikhl.gretty'
+
+gretty {
+    servletContainer = 'tomcat8'
+    enableNaming = true
+}
+
+flyway {
+    driver = 'com.mysql.jdbc.Driver'
+    url = 'jdbc:mysql://simon.dev.mango:3306/db_clipplr'
+    user = 'root'
+    password = 'rmflsakdrh'
+    table = 'schema_history'
+    sqlMigrationPrefix = 'v'
+    locations = ['classpath:db/migration']
+}
+
+dependencies {
+    compile libs.spring
+    compile libs.security
+    compile libs.jackson
+    compile libs.logging
+
+    compile ('org.springframework.social:spring-social-facebook:1.1.1.RELEASE')
+
+    compile ('org.hibernate:hibernate-validator:5.1.3.Final')
+    compile ('javax.servlet:jstl:1.2')
+    compile ('javax.servlet:javax.servlet-api:3.0.1')
+    compile ('javax.validation:validation-api:1.1.0.Final')
+
+    compile ('org.mybatis:mybatis:3.3.0')
+    compile ('org.mybatis:mybatis-spring:1.2.3')
+    compile ('org.pojomatic:pojomatic:2.0.1')
+    compile ('mysql:mysql-connector-java:5.1.34')
+    compile ('net.sf.ehcache:ehcache-core:2.6.11')
+
+    /* Swagger */
+    compile ('io.springfox:springfox-swagger2:2.2.2')
+    compile ('io.springfox:springfox-swagger-ui:2.2.2')
+
+    /* jsoup */
+    compile ('org.jsoup:jsoup:1.8.3')
+
+    compile ('net.bull.javamelody:javamelody-core:1.56.0')
+    compile ('org.aspectj:aspectjrt:1.6.11')
+    compile ('org.aspectj:aspectjweaver:1.6.11')
+
+    compile ('org.apache.httpcomponents:httpclient:4.4.1')
+    compile ('org.apache.httpcomponents:httpasyncclient:4.1')
+
+    testCompile ('org.springframework:spring-test:4.1.6.RELEASE')
+    testCompile ('junit:junit:4.12')
+    testCompile ('org.hamcrest:hamcrest-all:1.3')
+    testCompile ('javax.el:el-api:2.2')
+
+    gretty ("mysql:mysql-connector-java:5.1.34")
+    gretty ("org.apache.tomcat:tomcat-dbcp:$tomcat8Version")
+}
+
+sourceSets {
+    def targetServer = project.hasProperty('target') ? project.getProperty('target') : 'dev'
+
+    copy {
+
+        from("src/main/environment/${targetServer}") {
+            include 'application.properties'
+            include 'log4j2.xml'
+            include 'ehcache.xml'
+            exclude 'context.xml'
+        }
+
+        into("src/main/resources/")
+    }
+
+    copy {
+
+        from("src/main/environment/${targetServer}") {
+            include 'context.xml'
+            exclude 'application.properties'
+            exclude 'log4j2.xml'
+            exclude 'ehcache.xml'
+        }
+
+        into("src/main/webapp/META-INF")
+    }
+}
+
+configurations {
+    all.collect { configuration ->
+        configuration.exclude group: 'org.slf4j', module: 'slf4j-nop'
+    }
+}

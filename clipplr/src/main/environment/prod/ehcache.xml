@@ -1,0 +1,36 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true">
+
+    <!-- http://ehcache.org/ehcache.xml -->
+    <diskStore path="java.io.tmpdir" />
+
+    <cache
+            name="clipplr_cache_one"
+            maxElementsInMemory="50"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            statistics="true"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache
+            name="clipplr_cache_two"
+            maxElementsInMemory="50000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            statistics="true"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+</ehcache>

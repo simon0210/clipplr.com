@@ -1,0 +1,18 @@
+.gradle/
+.idea/
+classes/
+build/
+out/*
+
+*.iml
+clipplr/*.iml
+clipplr/build
+clipplr/tomcat.8080
+clipplr/src/main/environment/dev/context.xml
+clipplr/src/main/resources/mybatis-generator.xml
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar

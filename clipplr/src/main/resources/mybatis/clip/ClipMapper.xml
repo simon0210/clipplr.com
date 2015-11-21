@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clipplr.platform.persistence.mybatis.mapper.clip.ClipMapper">
+    <resultMap id="BaseResultMap" type="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="author_id" property="authorId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, author_id, title, image_url, is_deleted
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from clip
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from clip
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from clip
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipExample">
+        delete from clip
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into clip (author_id, title, image_url,
+        is_deleted)
+        values (#{authorId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR},
+        #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into clip
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="imageUrl != null">
+                image_url,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipExample"
+            resultType="java.lang.Integer">
+        select count(*) from clip
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update clip
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.authorId != null">
+                author_id = #{record.authorId,jdbcType=BIGINT},
+            </if>
+            <if test="record.title != null">
+                title = #{record.title,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imageUrl != null">
+                image_url = #{record.imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isDeleted != null">
+                is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update clip
+        set id = #{record.id,jdbcType=BIGINT},
+        author_id = #{record.authorId,jdbcType=BIGINT},
+        title = #{record.title,jdbcType=VARCHAR},
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+        update clip
+        <set>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUrl != null">
+                image_url = #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+    update clip
+    set author_id = #{authorId,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select resultMap="BaseResultMap" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipExample"
+            id="selectByExampleWithRowbounds">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from clip
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <!-- custom -->
+    <resultMap id="ClipResultMap" type="com.clipplr.platform.persistence.mybatis.domain.clip.Clip">
+        <id column="clip_id" property="id" jdbcType="BIGINT"/>
+        <result column="author_id" property="authorId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+        <result column="tag_name" property="tags" jdbcType="VARCHAR"/>
+        <association property="clipStatistics" resultMap="ClipStatisticsResultMap"/>
+    </resultMap>
+
+    <resultMap id="ClipStatisticsResultMap" type="com.clipplr.platform.persistence.mybatis.domain.clip.ClipStatistics">
+        <id column="stat_id" property="id" jdbcType="BIGINT"/>
+        <result column="view_count" property="viewCount" jdbcType="BIGINT"/>
+        <result column="clip_count" property="clipCount" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="countyByselectedClips" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM clip WHERE is_deleted = 0;
+    </select>
+
+    <select id="selectClips" parameterType="hashmap" resultMap="ClipResultMap">
+        SELECT
+            c.id as clip_id,
+            c.author_id as author_id,
+            c.title as title,
+            c.image_url as image_url,
+            cs.id as stat_id,
+            cs.view_count as view_count,
+            cs.clip_count as clip_count,
+            group_concat(udt.tag_name SEPARATOR ',') as tag_name
+        FROM
+            clip AS c
+            JOIN clip_statistics AS cs ON c.id = cs.clip_id
+            LEFT OUTER JOIN user_defined_tags AS udt ON c.id = udt.clip_id
+        WHERE c.is_deleted = 0
+        <if test="params.clipID != null">
+            and c.id = #{params.clipID, jdbcType=BIGINT}
+        </if>
+        GROUP BY c.id
+        <if test="params.bounds != null">
+            LIMIT #{params.bounds.offset, jdbcType=INTEGER} , #{params.bounds.limit, jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

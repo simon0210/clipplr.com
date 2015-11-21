@@ -1,0 +1,42 @@
+buildscript {
+  repositories {
+      jcenter()
+      mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.github.adrianbk:gradle-jvmsrc-plugin:0.6.1"
+  }
+}
+
+
+apply from: "$rootDir/gradle/dependencies.gradle"
+
+subprojects {
+  apply plugin: 'com.github.adrianbk.jvmsrc'
+
+  jvmsrc {
+    packageName "project-2ace"
+  }
+
+  apply plugin: 'java'
+
+
+  repositories {
+      mavenLocal()
+      mavenCentral()
+  }
+
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  configurations.all {
+    //Don't cache snapshots
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+  }
+}
+
+wrapper {
+  gradleVersion = "2.4"
+}

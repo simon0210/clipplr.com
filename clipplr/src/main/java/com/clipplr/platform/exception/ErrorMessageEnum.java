@@ -1,0 +1,47 @@
+package com.clipplr.platform.exception;
+
+/**
+ * Created by simon on 6/5/15.
+ */
+public enum ErrorMessageEnum {
+    INTERNAL_ERROR(1),
+    INVALID_REQUEST(2),
+    INVALID_PARAMETER_TYPE(4),
+    INVALID_PARAMETER_FORMAT(5),
+    INVALID_USERNAME(6),
+    INVALID_PASSWORD(7),
+    CONTENT_DOES_NOT_EXIST(8),
+    USERNAME_ALREADY_EXISTS(101),
+    NICK_NAME_ALREADY_EXISTS(201),
+    EMAIL_ADDRESS_ALREADY_USED (105),
+    BAD_CREDENTIAL(106),
+    ACCESS_DENIED(109),
+    INVALID_PARAMETER(112),
+    EMAIL_ADDRESS_NOT_EXIST(113),
+    REWARD_ALREADY_GET(114),
+    BALANCE_CHIP_NOT_ENOUGH(115),
+    BALANCE_RUBY_NOT_ENOUGH(116),
+    ACCOUNT_LOCKED(108),
+    HIERARCHY_NOT_FOUND(14),
+    PARTNER_NOT_FOUND(15),
+    PARTNER_ALREADY_IN_USE(16),
+    PASSWORD_ALREADY_IN_USE(17),
+    BONUS_CODE_IS_NOT_AVAILABLE(19),
+    DUPLICATED_TRANSACTION(20),
+    DUPLICATED(21),
+    OPERATOR_NOT_FOUND(22),
+    OPERATOR_ALREADY_IN_USE(23);
+
+
+    private final int value;
+
+    ErrorMessageEnum(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+}
+
