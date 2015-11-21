@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Context>
+
+    <Resource auth="Container"
+              driverClassName="com.mysql.jdbc.Driver"
+              type="javax.sql.DataSource"
+              url="jdbc:mysql://localhost:3306/db_clipplr?autoReconnect=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;noAccessToProcedureBodies=true&amp;useTimezone=true&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false&amp;allowMultiQueries=true"
+              maxTotal="8"
+              maxWaitMillis="10000"
+              maxIdle="4"
+              name="jdbc/db_platform"
+              username="root"
+              password="rmflsakdrh"/>
+
+</Context>
