@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="/Users/simon/Documents/projects/clipplr/clipplr_new/clipplr/src/main/resources/mybatis-generator/mysql-connector-java-5.1.26.jar"/>
+    <context id="context" targetRuntime="MyBatis3" defaultModelType="conditional">
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://simon.dev.mango:3306/db_clipplr" userId="root" password="rmflsakdrh"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.clipplr.platform.persistence.mybatis.domain" targetProject="clipplr/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.clipplr.platform.persistence.mybatis.domain" targetProject="clipplr/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.clipplr.platform.persistence.mybatis.mapper" targetProject="clipplr/src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- Examples
+        <table schema="dbo" tableName="users" domainObjectName="PlatformUser">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+            <columnOverride column="locale" javaType="java.util.Locale" />
+            <columnOverride column="time_zone" javaType="java.util.TimeZone" />
+            <columnOverride column="password_type" property="passwordType" javaType="com.pylon.platform.core.model.type.PasswordEncodingAlgorithm" />
+        </table>
+
+        <table schema="dbo" tableName="user_security_questions" domainObjectName="UserSecurityQuestion">
+            <property name="modelOnly" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+
+        <table schema="dbo" tableName="financial_accounts" domainObjectName="financial.Account">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+
+       <table schema="dbo" tableName="user_transaction_summaries" domainObjectName="UserTransactionSummaries" enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false" enableUpdateByExample="false">
+              <columnOverride column="transaction_code" javaType="java.lang.String" jdbcType="BIGINT"/>
+              <columnOverride column="foreign_currency_commission_id" javaType="java.lang.Long"/>
+              <columnOverride column="hierarchyId" javaType="java.lang.Integer"/>
+        </table>
+
+        <table schema="dbo" tableName="user_transaction_detail_summaries" domainObjectName="UserTransactionDetailSummaries" enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false" enableUpdateByExample="false">
+              <columnOverride column="transaction_code" javaType="java.lang.String" jdbcType="BIGINT"/>
+              <columnOverride column="foreign_currency_commission_id" javaType="java.lang.Long"/>
+        </table>
+
+        <table schema="dbo" tableName="clip" domainObjectName="clip.Clip">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Boolean" jdbcType="TINYINT"/>
+        </table>
+
+        <table schema="dbo" tableName="clip_tags" domainObjectName="clip.ClipTag">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table schema="dbo" tableName="clip_post" domainObjectName="clip.ClipPost">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        -->
+
+        <table schema="dbo" tableName="clip_post" domainObjectName="clip.ClipPost">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

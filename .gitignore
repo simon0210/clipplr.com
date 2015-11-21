@@ -8,9 +8,6 @@ out/*
 clipplr/*.iml
 clipplr/build
 clipplr/tomcat.8080
-clipplr/src/main/environment/dev/context.xml
-clipplr/src/main/webapp/META-INF/context.xml
-clipplr/src/main/resources/mybatis-generator/generatorConfig.xml
 
 # Ignore Gradle GUI config
 gradle-app.setting
