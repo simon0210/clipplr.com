@@ -11,6 +11,13 @@ apply plugin: 'org.akhikhl.gretty'
 gretty {
     servletContainer = 'tomcat8'
     enableNaming = true
+    jvmArgs = [
+            '-XX:MaxPermSize=128m',
+            '-Xms256m',
+            '-Xmx512m',
+            '-Dfile.encoding=UTF-8',
+//            '-DCLIPPLR_DB="simon.dev.mango"'
+    ]
 }
 
 flyway {
