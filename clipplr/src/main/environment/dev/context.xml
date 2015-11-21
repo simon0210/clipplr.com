@@ -9,7 +9,7 @@
               maxTotal="8"
               maxWaitMillis="10000"
               maxIdle="4"
-              name="jdbc/db_platform"
+              name="jdbc/db_clipplr"
               username="root"
               password="rmflsakdrh"/>
 
