@@ -56,7 +56,6 @@ public class ClipController {
 
     @ApiOperation(value = "Save Of the Clip", notes = "클립을 저장한다")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Long saveClip(
             @ApiParam(required = true, value = "Clip") @RequestBody(required = true) ClipPostRequest clip
