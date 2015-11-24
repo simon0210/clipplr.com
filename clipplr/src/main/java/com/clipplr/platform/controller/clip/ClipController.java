@@ -2,6 +2,7 @@ package com.clipplr.platform.controller.clip;
 
 import com.clipplr.platform.common.core.conversion.annotation.Bounds;
 import com.clipplr.platform.persistence.mybatis.domain.clip.Clip;
+import com.clipplr.platform.persistence.mybatis.domain.clip.ClipBoard;
 import com.clipplr.platform.persistence.mybatis.domain.clip.ClipPostRequest;
 import com.clipplr.platform.persistence.mybatis.domain.clip.SetClipTagRequest;
 import com.clipplr.platform.persistence.service.clip.ClipService;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,9 +60,6 @@ public class ClipController {
     public Long saveClip(
             @ApiParam(required = true, value = "Clip") @RequestBody(required = true) ClipPostRequest clip
     ) {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("clip", clip);
-
         return clipService.saveClip(clip);
     }
 
@@ -105,5 +102,15 @@ public class ClipController {
             @ApiParam(required = true, value = "Clip Tags") @RequestBody(required = true) SetClipTagRequest setClipTagRequest
     ) {
         clipService.setTagsToClip(clipID, setClipTagRequest);
+    }
+
+    @ApiOperation(value = "Save Of the Clip", notes = "클립을 클립 보드에 연결한다.")
+    @RequestMapping(value = "/board/save", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void saveClipBoard(
+            @ApiParam(required = true, value = "Clip") @RequestBody(required = true) ClipBoard clipBoard
+    ) {
+        clipService.saveClipboard(clipBoard);
     }
 }

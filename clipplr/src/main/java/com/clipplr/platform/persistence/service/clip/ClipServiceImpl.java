@@ -37,6 +37,9 @@ public class ClipServiceImpl implements ClipService {
     @Autowired
     ClipPostImageMapper postImageRepository;
 
+    @Autowired
+    ClipBoardMapper clipBoardRepository;
+
     @Override
     public List<HashMap<String, Object>> getClipList(HashMap<String, Object> params) {
 
@@ -155,5 +158,28 @@ public class ClipServiceImpl implements ClipService {
             userDefineTag.setTagName(tag);
             tagRepository.insert(userDefineTag);
         }
+    }
+
+    @Override
+    public void saveClipboard(ClipBoard clipBoard) {
+        ClipBoard board = new ClipBoard();
+        board.setClipId(clipBoard.getClipId());
+        board.setBoardName(clipBoard.getBoardName());
+
+        String[] tags = clipBoard.getTags();
+
+        //insert clip tags
+        if (tags != null) {
+            for (int i = 0; i < tags.length; i++) {
+                UserDefineTag tag = new UserDefineTag();
+                tag.setClipId(clipBoard.getClipId());
+                tag.setTagName(tags[i]);
+
+                tagRepository.insert(tag);
+            }
+        }
+
+        //insert clip board
+        clipBoardRepository.insert(board);
     }
 }

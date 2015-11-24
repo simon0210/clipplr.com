@@ -78,7 +78,7 @@
         </table>
         -->
 
-        <table schema="dbo" tableName="clip_post" domainObjectName="clip.ClipPost">
+        <table schema="dbo" tableName="clip_board" domainObjectName="clip.ClipBoard">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 

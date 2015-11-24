@@ -5,12 +5,12 @@
     <Resource auth="Container"
               driverClassName="com.mysql.jdbc.Driver"
               type="javax.sql.DataSource"
-              url="jdbc:mysql://${CLIPPLR_DB}/db_clipplr?autoReconnect=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;noAccessToProcedureBodies=true&amp;useTimezone=true&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false&amp;allowMultiQueries=true"
+              url="jdbc:mysql://127.0.0.1/db_clipplr?autoReconnect=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;noAccessToProcedureBodies=true&amp;useTimezone=true&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false&amp;allowMultiQueries=true"
               maxTotal="8"
               maxWaitMillis="10000"
               maxIdle="4"
               name="jdbc/db_clipplr"
               username="root"
-              password="rmflsakdrh"/>
+              password="usun81"/>
 
 </Context>

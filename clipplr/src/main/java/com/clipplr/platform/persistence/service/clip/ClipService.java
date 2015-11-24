@@ -1,6 +1,7 @@
 package com.clipplr.platform.persistence.service.clip;
 
 import com.clipplr.platform.persistence.mybatis.domain.clip.Clip;
+import com.clipplr.platform.persistence.mybatis.domain.clip.ClipBoard;
 import com.clipplr.platform.persistence.mybatis.domain.clip.ClipPostRequest;
 import com.clipplr.platform.persistence.mybatis.domain.clip.SetClipTagRequest;
 
@@ -25,4 +26,6 @@ public interface ClipService {
     HashMap<String, Object> getClipTags();
 
     void setTagsToClip(Long clipID, SetClipTagRequest setClipTagRequest);
+
+    void saveClipboard(ClipBoard clipBoard);
 }
