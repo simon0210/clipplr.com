@@ -1,6 +1,7 @@
 package com.clipplr.platform.persistence.mybatis.domain.clip;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
@@ -14,6 +15,7 @@ public class ClipBoard implements Serializable {
 
     private Long clipId;
 
+    @JsonProperty("clipboard")
     private String boardName;
 
     private static final long serialVersionUID = 1L;
