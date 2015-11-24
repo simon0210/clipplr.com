@@ -105,12 +105,20 @@ public class ClipController {
     }
 
     @ApiOperation(value = "Save Of the Clip", notes = "클립을 클립 보드에 연결한다.")
-    @RequestMapping(value = "/board/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/board/config", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void saveClipBoard(
             @ApiParam(required = true, value = "Clip") @RequestBody(required = true) ClipBoard clipBoard
     ) {
-        clipService.saveClipboard(clipBoard);
+        clipService.saveClipBoard(clipBoard);
+    }
+
+    @ApiOperation(value = "Save Of the Clip", notes = "전체 클립 보드를 가져온다")
+    @RequestMapping(value = "/board/list", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ClipBoard> getClipBoard(
+    ) {
+        return clipService.getClipBoards();
     }
 }

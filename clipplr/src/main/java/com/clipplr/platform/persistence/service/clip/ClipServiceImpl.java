@@ -161,7 +161,7 @@ public class ClipServiceImpl implements ClipService {
     }
 
     @Override
-    public void saveClipboard(ClipBoard clipBoard) {
+    public void saveClipBoard(ClipBoard clipBoard) {
         ClipBoard board = new ClipBoard();
         board.setClipId(clipBoard.getClipId());
         board.setBoardName(clipBoard.getBoardName());
@@ -181,5 +181,10 @@ public class ClipServiceImpl implements ClipService {
 
         //insert clip board
         clipBoardRepository.insert(board);
+    }
+
+    @Override
+    public List<ClipBoard> getClipBoards() {
+        return clipBoardRepository.selectByExample(new ClipBoardExample());
     }
 }

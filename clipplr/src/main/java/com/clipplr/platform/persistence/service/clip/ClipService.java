@@ -27,5 +27,7 @@ public interface ClipService {
 
     void setTagsToClip(Long clipID, SetClipTagRequest setClipTagRequest);
 
-    void saveClipboard(ClipBoard clipBoard);
+    void saveClipBoard(ClipBoard clipBoard);
+
+    List<ClipBoard> getClipBoards();
 }
