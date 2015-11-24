@@ -20,6 +20,8 @@ public class ClipPost implements Serializable {
 
     private String host;
 
+    private String type;
+
     private String title;
 
     private String description;
@@ -61,6 +63,14 @@ public class ClipPost implements Serializable {
 
     public void setHost(String host) {
         this.host = host == null ? null : host.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getTitle() {

@@ -6,6 +6,7 @@
     <result column="clip_id" property="clipId" jdbcType="BIGINT" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="host" property="host" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="selected_image" property="selectedImage" jdbcType="VARCHAR" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, clip_id, url, host, title, description, selected_image
+    id, clip_id, url, host, type, title, description, selected_image
   </sql>
   <sql id="Blob_Column_List" >
     text
@@ -130,11 +131,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into clip_post (clip_id, url, host, 
-      title, description, selected_image, 
-      text)
+      type, title, description, 
+      selected_image, text)
     values (#{clipId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{selectedImage,jdbcType=VARCHAR}, 
-      #{text,jdbcType=LONGVARCHAR})
+      #{type,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{selectedImage,jdbcType=VARCHAR}, #{text,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.clipplr.platform.persistence.mybatis.domain.clip.ClipPost" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -150,6 +151,9 @@
       </if>
       <if test="host != null" >
         host,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="title != null" >
         title,
@@ -173,6 +177,9 @@
       </if>
       <if test="host != null" >
         #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -209,6 +216,9 @@
       <if test="record.host != null" >
         host = #{record.host,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -232,6 +242,7 @@
       clip_id = #{record.clipId,jdbcType=BIGINT},
       url = #{record.url,jdbcType=VARCHAR},
       host = #{record.host,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       selected_image = #{record.selectedImage,jdbcType=VARCHAR},
@@ -246,6 +257,7 @@
       clip_id = #{record.clipId,jdbcType=BIGINT},
       url = #{record.url,jdbcType=VARCHAR},
       host = #{record.host,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       selected_image = #{record.selectedImage,jdbcType=VARCHAR}
@@ -264,6 +276,9 @@
       </if>
       <if test="host != null" >
         host = #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -285,6 +300,7 @@
     set clip_id = #{clipId,jdbcType=BIGINT},
       url = #{url,jdbcType=VARCHAR},
       host = #{host,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       selected_image = #{selectedImage,jdbcType=VARCHAR},
@@ -296,6 +312,7 @@
     set clip_id = #{clipId,jdbcType=BIGINT},
       url = #{url,jdbcType=VARCHAR},
       host = #{host,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       selected_image = #{selectedImage,jdbcType=VARCHAR}
